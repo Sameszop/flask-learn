@@ -1,0 +1,1 @@
+simple flask application for learning purposes

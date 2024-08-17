@@ -7,16 +7,20 @@ from flask_login import login_required, current_user, LoginManager
 from flask_wtf.csrf import CSRFProtect
 from flask_talisman import Talisman
 from flask_cors import CORS
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 app = Flask(__name__)
 talisman = Talisman(app, content_security_policy=None)
 CORS(app)
 csrf = CSRFProtect(app)
 csrf.init_app(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://librarian:books@localhost/dbname'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # app.config['SESSION_COOKIE_SECURE'] = True
-app.secret_key = "flaskApp"
+app.secret_key = os.getenv('SECRET_KEY')
 user=None
 db.init_app(app)  
 login_manager = LoginManager(app)
