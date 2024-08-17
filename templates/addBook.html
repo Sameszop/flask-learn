@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Add a New Book</h2>
+    <form method="POST">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+        
+        <label for="release">Release Date:</label><br>
+        <input type="date" id="release" name="release" required><br><br>
+        
+        <label for="picture">Picture URL:</label><br>
+        <input type="text" id="picture" name="picture" required><br><br>
+        
+        <input type="submit" value="Add Book">
+    </form>
+{% endblock %}

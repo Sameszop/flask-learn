@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block style %} <link rel="stylesheet" href="{{ url_for('static',filename = 'css/index.css') }}"> {% endblock %}
+
+{% block title %}Home - My Website{% endblock %}
+
+{% block content %}
+    <h2>Welcome to the Home Page</h2>
+        {% for book in books %}
+        <div>
+            <h2>{{ book.name }}</h2>
+            <p>Release Date: {{ book.release }}</p>
+            <p>Borrowed: 
+                {% if book.owner_id %}
+                    Yes
+                {% else %}
+                    No
+                {% endif %}
+            </p>
+            <img style="max-width: 30%; max-height: 30%;" src="{{ book.picture }}" alt="Picture for: {{ book.name }}">
+            <form method="POST">
+                <button type="submit" name="id" value="{{book.id}}">borrow now</button>
+            </form>
+        </div>
+        {% endfor %}
+{% endblock %}

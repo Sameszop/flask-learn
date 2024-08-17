@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block style %} 
+
+{% endblock %}
+
+{% block title %}My Books{% endblock %}
+
+{% block content %}
+    <h2>Welcome to the Book Page</h2>
+    {% for book in books %}
+    {% if book.owner_id == user.id %}
+        <div class="book">
+            <h2>{{ book.name }}</h2>
+            <p>Release Date: {{ book.release }}</p>
+            <img src="{{ book.picture }}" alt="{{ book.name }}">
+            <!-- Add more book details here -->
+            <form action="/giveBack" method="POST">
+                <button name="bookId" value="{{book.id}}" type="submit">Give back</button>
+            </form>
+        </div>
+    {% endif %}
+    {% endfor %}
+{% endblock %}
