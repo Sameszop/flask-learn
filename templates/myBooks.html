@@ -15,6 +15,7 @@
             <img src="{{ book.picture }}" alt="{{ book.name }}">
             <!-- Add more book details here -->
             <form action="/giveBack" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">  <!-- Include CSRF token -->
                 <button name="bookId" value="{{book.id}}" type="submit">Give back</button>
             </form>
         </div>

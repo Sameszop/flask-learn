@@ -1,40 +1,37 @@
 from argon2 import PasswordHasher, exceptions
-from flask_sqlalchemy import SQLAlchemy
 from modules.models import User, db
-from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required
+from flask_login import login_user
 
-prefix:str = "prefixforbooks"
+prefix = "prefixforbooks"
 ph = PasswordHasher()
 
-def login(email:str, password:str):
+def login(email: str, password: str):
     try:
-        currentPassword = prefix+password
+        current_password = prefix + password
         user = User.query.filter_by(email=email).first()
-        verify = verifyPassword(user.password, currentPassword)
-        if verify:
+        if user and verify_password(user.password, current_password):
             login_user(user)
             return user
-        else:
-            return False
+        return None
     except Exception as e:
-        print("Error in login: ",e)
-        return e
+        print("Error in login:", e)
+        return None
 
-def verifyPassword (dbPassword, currentPassword):
+def verify_password(db_password, current_password):
     try:
-        ph.verify(dbPassword, currentPassword)
-        return True
+        return ph.verify(db_password, current_password)
     except exceptions.VerifyMismatchError:
         return False
-    
-def register(email:str, password:str, name:str):
+
+def register(email: str, password: str, name: str):
     try:
-        hashedPassword = ph.hash(prefix + password)
-        new_user = User(userName=name, email = email, password=hashedPassword)
+        hashed_password = ph.hash(prefix + password)
+        new_user = User(userName=name, email=email, password=hashed_password)
         db.session.add(new_user)
         db.session.commit()
         login_user(new_user)
         return new_user
     except Exception as e:
-        print("Error: " + str(e))
+        print("Error:", str(e))
+        db.session.rollback()
         return None

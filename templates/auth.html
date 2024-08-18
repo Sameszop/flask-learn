@@ -9,11 +9,23 @@
 
 <div>
     <h2>Register</h2>
-    <form action="/register" method="POST">
-        <input type="text" placeholder="User-Name" name="name">
-        <input type="email" placeholder="Email: " name="email">
-        <input type="password" placeholder="Password: " name="password">
-        <input type="password" placeholder="Confirm Password: " name="re-password">
-        <button type="submit">Submit</button>
+    <form method="POST" action="/register">
+        {{ form.hidden_tag() }}  <!-- This automatically includes the CSRF token -->
+        <div>
+            {{ form.email.label }} {{ form.email }}
+        </div>
+        <div>
+            {{ form.name.label }} {{ form.name }}
+        </div>
+        <div>
+            {{ form.password.label }} {{ form.password }}
+        </div>
+        <div>
+            {{ form.re_password.label }} {{ form.re_password }}
+        </div>
+        <div>
+            {{ form.submit }}
+        </div>
     </form>
+    
 </div>

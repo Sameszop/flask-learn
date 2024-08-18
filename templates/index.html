@@ -18,7 +18,8 @@
             </p>
             <img style="max-width: 30%; max-height: 30%;" src="{{ book.picture }}" alt="Picture for: {{ book.name }}">
             <form method="POST">
-                <button type="submit" name="id" value="{{book.id}}">borrow now</button>
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">  <!-- Include CSRF token -->
+                <button type="submit" name="id" value="{{ book.id }}">Borrow Now</button>
             </form>
         </div>
         {% endfor %}

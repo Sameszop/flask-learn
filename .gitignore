@@ -12,3 +12,4 @@ venv/
 # IDE and editor settings
 .vscode/
 .idea/
+debug.py
